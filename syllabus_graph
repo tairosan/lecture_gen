@@ -1,0 +1,65 @@
+digraph "Syllabus Graph" {
+	"Index 1
+1枚分の文書執筆をAIで自動化しよう" [fillcolor=lightblue shape=box style=filled]
+	"Index 1
+1枚分の文書執筆をAIで自動化しよう" -> lectures_1 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_1 {
+		lectures_1 [label="GPTsの基本的な特徴と利用方法について学ぶ。
+" shape=box]
+	}
+	"Index 2
+文書をAIで修正しよう" [fillcolor=lightblue shape=box style=filled]
+	"Index 2
+文書をAIで修正しよう" -> lectures_2 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_2 {
+		lectures_2 [label="Cursorの基本的な操作方法を学ぶ。
+" shape=box]
+	}
+	"Index 3
+APIで文書執筆を効率化しよう" [fillcolor=lightblue shape=box style=filled]
+	"Index 3
+APIで文書執筆を効率化しよう" -> lectures_3 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_3 {
+		lectures_3 [label="APIの概要、APIの種類、APIの活用方法を学ぶ。
+" shape=box]
+	}
+	"Index 4
+AIで書籍を作ろう" [fillcolor=lightblue shape=box style=filled]
+	"Index 4
+AIで書籍を作ろう" -> lectures_4 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_4 {
+		lectures_4 [label="CursorとClaudeのAPIを組み合わせて、高品質な書籍を短時間で作成する方法を学ぶ。
+" shape=box]
+	}
+	"Index 5
+書籍をバージョン管理しよう" [fillcolor=lightblue shape=box style=filled]
+	"Index 5
+書籍をバージョン管理しよう" -> lectures_5 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_5 {
+		lectures_5 [label="Githubの基本的な操作方法を学ぶ。
+" shape=box]
+	}
+	"Index 6
+メーリングリストへの一斉送信で書籍を売り込もう" [fillcolor=lightblue shape=box style=filled]
+	"Index 6
+メーリングリストへの一斉送信で書籍を売り込もう" -> lectures_6 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week_6 {
+		lectures_6 [label="CursorとGASを使って、メーリングリストへの一斉送信を行う方法を学ぶ。
+" shape=box]
+	}
+	"Index 1
+1枚分の文書執筆をAIで自動化しよう" -> "Index 2
+文書をAIで修正しよう"
+	"Index 2
+文書をAIで修正しよう" -> "Index 3
+APIで文書執筆を効率化しよう"
+	"Index 3
+APIで文書執筆を効率化しよう" -> "Index 4
+AIで書籍を作ろう"
+	"Index 4
+AIで書籍を作ろう" -> "Index 5
+書籍をバージョン管理しよう"
+	"Index 5
+書籍をバージョン管理しよう" -> "Index 6
+メーリングリストへの一斉送信で書籍を売り込もう"
+}

@@ -1,0 +1,80 @@
+
+- week: 1
+  topics:
+    - GPTsを用いたプロンプトプログラミングとドキュメントプログラミング
+  lectures:
+    - title: GPTsの特徴と利用方法
+      description: |
+        GPTsの基本的な特徴と利用方法について学ぶ。効果的なプロンプトの作成方法を理解する。
+    - title: Chatbot作成の手順
+      description: |
+        GPTsを用いたChatbot作成の手順を学ぶ。対話型のインターフェースを設計する方法を理解する。
+    - title: プロンプトプログラミングとドキュメントプログラミングのデモ
+      description: |
+        プロンプトプログラミングとドキュメントプログラミングの実例を見ながら、その活用方法を学ぶ。
+
+- week: 2
+  topics:
+    - Cursorの基本操作と活用法
+    - テキスト生成AIの概要
+  lectures:
+    - title: Cursorの概要と主要機能
+      description: |
+        Cursorの基本的な操作方法を学ぶ。コード編集・生成、オートコンプリート、AIとの対話などの機能を理解する。
+    - title: 生成されたコンテンツの修正方法
+      description: |
+        Cursorを使って、AIによって生成されたコンテンツを効率的に修正する方法を学ぶ。
+    - title: APIとローカルLLMの違いと分類
+      description: |
+        APIベースのAIとローカルLLMの違いを理解し、それぞれの特徴と利用シーンを学ぶ。
+    - title: 主要モデルの紹介
+      description: |
+        書籍作成に適したテキスト生成AIモデル（GPT-4, Claude, Mistral, Llamaなど）の特徴を理解する。
+    - title: GPTとClaudeの比較、Claudeの優位性
+      description: |
+        GPTとClaudeを比較し、Claudeの優位性を理解する。書籍作成におけるClaudeの活用方法を学ぶ。
+    - title: APIを使った出力の方法
+      description: |
+        テキスト生成AIのAPIを使って、効果的にコンテンツを生成する方法を学ぶ。
+
+- week: 3
+  topics:
+    - シェルとOpen Interpreterの活用法
+    - Githubを用いたバージョン管理と共同開発
+  lectures:
+    - title: シェルの基礎
+      description: |
+        コマンドラインインターフェース（CLI）の使い方、ファイル操作、シェルスクリプトの基礎を学ぶ。
+    - title: Open Interpreterの概要と必要性
+      description: |
+        Open Interpreterの概要を理解し、書籍作成プロセスにおける必要性を学ぶ。
+    - title: Githubの基本
+      description: |
+        リポジトリ、ブランチ、プルリクエストなどのGithubの基本概念を理解する。
+    - title: AIモデルのバージョン管理
+      description: |
+        Githubを用いてAIモデルのバージョン管理を行う方法を学ぶ。
+    - title: チーム開発とコラボレーション
+      description: |
+        Githubを活用したチーム開発とコラボレーションの方法を学ぶ。
+    - title: オープンソース活動
+      description: |
+        Githubを通じたオープンソース活動への参加方法を理解する。
+
+- week: 4
+  topics:
+    - Cursorを用いたClaudeによる書籍作成実践
+    - CursorからのGAS開発
+  lectures:
+    - title: ClaudeのAPIを使った書籍作成
+      description: |
+        CursorとClaudeのAPIを組み合わせて、高品質な書籍を短時間で作成する方法を学ぶ。
+    - title: 書籍の仕上げ
+      description: |
+        生成された書籍コンテンツの編集、構成、フォーマットなどの仕上げ作業を行う方法を学ぶ。
+    - title: Githubを用いた書籍プロジェクトの管理
+      description: |
+        Githubを活用して、書籍作成プロジェクトのバージョン管理と共同開発を円滑に行う方法を学ぶ。
+    - title: CursorからのGAS開発
+      description: |
+        CursorとGAS（Google Apps Script）を連携させ、メーリングリストに書籍の告知を行う方法を学ぶ。

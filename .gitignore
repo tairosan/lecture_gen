@@ -1,0 +1,36 @@
+# Node.js依存関係
+node_modules/
+
+# ビルド出力ディレクトリ
+dist/
+build/
+output/*
+!output/.gitkeep
+references/*
+!references/.gitkeep
+images/*
+!images/.gitkeep
+
+# ログファイル
+*.log
+
+# 一時ファイルとキャッシュ
+.tmp/
+.cache/
+
+# IDEとエディタの設定ファイル
+.vscode/
+.idea/
+*.sublime-workspace
+
+# 環境変数ファイル
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# macOSシステムファイル
+.DS_Store
+
+# その他のプロジェクト固有のファイルやディレクトリ

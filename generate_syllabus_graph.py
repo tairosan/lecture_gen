@@ -1,73 +1,42 @@
 
-import graphviz
+import yaml
+from lecture_generator import generate_lecture_content
+from quiz_generator import generate_quiz_content
 
-syllabus = [
-    {
-        'week': 1,
-        'topics': ['料理の基礎'],
-        'lectures': [
-            {'title': '料理の基本的な概念', 'description': '料理の基本的な概念について説明します。'},
-            {'title': '包丁の使い方と切り方の基本', 'description': '包丁の使い方や切り方の基本を教えます。'},
-            {'title': 'だしの取り方と基本的な調味料の使い方', 'description': 'だしの取り方や基本的な調味料の使い方をレクチャーします。'}
-        ]
-    },
-    {
-        'week': 2,
-        'topics': ['和食料理の応用'],
-        'lectures': [
-            {'title': '料理の基本概念の復習', 'description': '1週目と同じように、料理の基本概念から入ります。'},
-            {'title': '代表的な和食料理の作り方', 'description': '代表的な和食料理の作り方について深掘りしていきます。'},
-            {'title': '盛り付けのコツとテーブルセッティング', 'description': '盛り付けのコツやテーブルセッティングについても学びます。'}
-        ]
-    },
-    {
-        'week': 3,
-        'topics': ['フランス料理の基礎'],
-        'lectures': [
-            {'title': 'フランス料理の歴史と特徴', 'description': 'フランス料理の歴史や特徴の概要から始まります。'},
-            {'title': '基本的なソースの作り方', 'description': '基本的なソースの作り方を解説します。'},
-            {'title': '実践的なフルコースメニューの作成方法', 'description': '習得した技術を活かした実践的なフルコースメニューの作成方法についても触れます。'}
-        ]
-    },
-    {
-        'week': 4,
-        'topics': ['中華料理の基礎'],
-        'lectures': [
-            {'title': '中華料理の歴史と特徴', 'description': '中華料理の歴史や特徴について概説します。'},
-            {'title': '基本的な調理法と食材の扱い方', 'description': '基本的な調理法や食材の扱い方を解説します。'},
-            {'title': '代表的な中華料理のレシピと実践的な調理法', 'description': '代表的な中華料理のレシピを紹介し、実践的な調理法を学びます。'}
-        ]
-    },
-    {
-        'week': 5,
-        'topics': ['デザートの基礎'],
-        'lectures': [
-            {'title': 'デザートの歴史と種類', 'description': 'デザートの歴史や種類について概要を説明します。'},
-            {'title': '基本的な製菓技術', 'description': '基本的な製菓技術を教えます。'},
-            {'title': '代表的なデザートの作り方', 'description': 'ケーキ、タルト、プリンなど、代表的なデザートの作り方を実践的に学びます。'},
-            {'title': 'デザートのプレゼンテーションとテーブルコーディネート', 'description': 'デザートのプレゼンテーションやテーブルコーディネートのコツについても触れます。'}
-        ]
-    }
-]
+def main():
+    # Read syllabus from YAML file
+    with open("syllabus.yaml", "r") as f:
+        syllabus = yaml.safe_load(f)
 
-g = graphviz.Digraph(comment='Syllabus Graph')
+    # Open book.md for writing
+    with open("book.md", "w") as book_file:
+        # Iterate over each week in the syllabus
+        for week in syllabus:
+            week_number = week["week"]
+            topics = week["topics"]
+            lectures = week["lectures"]
 
-for week_data in syllabus:
-    week_index = week_data['week']
-    week_topics = ', '.join(week_data['topics'])
-    week_node_name = f"Week {week_index}\n{week_topics}"
-    g.node(week_node_name, shape='box', style='filled', fillcolor='lightblue')
+            # Write week header
+            book_file.write(f"# Week {week_number}: {', '.join(topics)}\n\n")
 
-    with g.subgraph(name=f'cluster_week{week_index}') as c:
-        lecture_titles = '\n'.join([lecture['title'] for lecture in week_data['lectures']])
-        c.node(f'lectures_week{week_index}', shape='box', label=lecture_titles)
-        g.edge(week_node_name, f'lectures_week{week_index}', style='dashed', tailport='s', headport='sw')
+            # Iterate over each lecture in the week
+            for lecture in lectures:
+                title = lecture["title"]
+                description = lecture["description"]
 
-for i in range(len(syllabus) - 1):
-    current_week_data = syllabus[i]
-    next_week_data = syllabus[i + 1]
-    current_week_node_name = f"Week {current_week_data['week']}\n{', '.join(current_week_data['topics'])}"
-    next_week_node_name = f"Week {next_week_data['week']}\n{', '.join(next_week_data['topics'])}"
-    g.edge(current_week_node_name, next_week_node_name)
+                # Generate lecture content using AI
+                lecture_content = generate_lecture_content(title, description)
 
-g.view(filename='syllabus_graph.png')
+                # Generate quiz content using AI
+                quiz_content = generate_quiz_content(title, description)
+
+                # Write lecture content to book.md
+                book_file.write(f"## {title}\n\n")
+                book_file.write(f"{lecture_content}\n\n")
+
+                # Write quiz content to book.md
+                book_file.write(f"## Quiz: {title}\n\n")
+                book_file.write(f"{quiz_content}\n\n")
+
+if __name__ == "__main__":
+    main()

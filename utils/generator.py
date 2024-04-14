@@ -6,6 +6,36 @@ from dotenv import load_dotenv
 
 load_dotenv()  # .envファイルから環境変数を読み込む
 
+def generate_book():
+    """
+    """
+    client = anthropic.Anthropic(
+        api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
+    )
+
+    # 🌸 messages contentの中にあるtextを変数として外に出しました
+    with open("AIdocs/講義資料生成AI.md", "r") as f:
+        lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
+
+    message = client.messages.create(
+        model="claude-3-opus-20240229",
+        max_tokens=4000,
+        temperature=0.5,
+        system="",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": lecture_content_prompt
+                    }
+                ]
+            }
+        ]
+    )
+    return message.content[0].text
+
 def generate_lecture_content(lecture_title, lecture_description):
     """
     講義の内容を生成する関数
@@ -30,7 +60,7 @@ def generate_lecture_content(lecture_title, lecture_description):
     )
 
     # 🌸 messages contentの中にあるtextを変数として外に出しました
-    with open("prompts/lecture_content_prompt.md", "r") as f:
+    with open("AIdocs/講義資料生成AI.md", "r") as f:
         lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
 
     message = client.messages.create(
@@ -60,7 +90,7 @@ def generate_quiz_content(lecture_title, lecture_description):
     )
 
     # 🌸 messages contentの中にあるtextを変数として外に出しました
-    with open("prompts/quiz_content_prompt.md", "r") as f:
+    with open("AIdocs/quiz_content_prompt.md", "r") as f:
         quiz_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
         print(quiz_content_prompt)
 

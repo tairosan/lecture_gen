@@ -34,3 +34,7 @@ images/*
 .DS_Store
 
 # その他のプロジェクト固有のファイルやディレクトリ
+__pycache__
+*.pyc
+*copy.txt
+*copy*.pdf

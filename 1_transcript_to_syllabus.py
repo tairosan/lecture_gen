@@ -64,7 +64,7 @@ def generate_syllabus(transcript):
     syllabus_yaml = syllabus_yaml.replace("```yaml", "").replace("```", "")
     return syllabus_yaml
 
-def generate_syllabus_graph(syllabus):
+def generate_syllabus_graph():
     """
     syllabusの内容からグラフを生成する関数
     
@@ -75,7 +75,10 @@ def generate_syllabus_graph(syllabus):
         None
     """
     client = anthropic.Anthropic(api_key=anthropic.api_key)
-    
+
+    with open("./syllabus.yaml", "r") as file:
+        syllabus = file.read()
+
     prompt = f"""
     syllabus:
     {syllabus}
@@ -139,7 +142,7 @@ def generate_syllabus_graph(syllabus):
 # from generate_syllabus_graph import generate_syllabus_graph
 
 # 使用例
-with open("./transcript.txt", "r") as f:
+with open("./transcript_cook.txt", "r") as f:
     transcript = f.read()  # transcript.txtファイルから文字起こし情報を読み込む
     syllabus = generate_syllabus(transcript)
     print(syllabus)
@@ -148,8 +151,10 @@ with open("./transcript.txt", "r") as f:
     
     os.rename("syllabus.txt", "syllabus.yaml")
     
-    # syllabusをyamlで読み込んで辞書形式に変換
-    syllabus_dict = yaml.safe_load(syllabus)
+    # # syllabusをyamlで読み込んで辞書形式に変換
+    # syllabus_dict = yaml.safe_load(syllabus)
     
     # syllabusの内容からグラフを生成
-    generate_syllabus_graph(syllabus_dict)
+    generate_syllabus_graph()
+
+# generate_syllabus_graph()

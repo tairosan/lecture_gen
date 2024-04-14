@@ -3,29 +3,48 @@ digraph {
 	"Week 1
 料理の基礎" [fillcolor=lightblue shape=box style=filled]
 	"Week 1
-料理の基礎" -> lectures_1 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_1 {
-		lectures_1 [label="料理の基本的な概念
+料理の基礎" -> lectures_week1 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week1 {
+		lectures_week1 [label="料理の基本的な概念
 包丁の使い方と切り方の基本
 だしの取り方と基本的な調味料の使い方" shape=box]
 	}
 	"Week 2
 和食料理の応用" [fillcolor=lightblue shape=box style=filled]
 	"Week 2
-和食料理の応用" -> lectures_2 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_2 {
-		lectures_2 [label="料理の基本概念の復習
+和食料理の応用" -> lectures_week2 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week2 {
+		lectures_week2 [label="料理の基本概念の復習
 代表的な和食料理の作り方
 盛り付けのコツとテーブルセッティング" shape=box]
 	}
 	"Week 3
 フランス料理の基礎" [fillcolor=lightblue shape=box style=filled]
 	"Week 3
-フランス料理の基礎" -> lectures_3 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_3 {
-		lectures_3 [label="フランス料理の歴史と特徴
+フランス料理の基礎" -> lectures_week3 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week3 {
+		lectures_week3 [label="フランス料理の歴史と特徴
 基本的なソースの作り方
-フルコースメニューの作成方法" shape=box]
+実践的なフルコースメニューの作成方法" shape=box]
+	}
+	"Week 4
+中華料理の基礎" [fillcolor=lightblue shape=box style=filled]
+	"Week 4
+中華料理の基礎" -> lectures_week4 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week4 {
+		lectures_week4 [label="中華料理の歴史と特徴
+基本的な調理法と食材の扱い方
+代表的な中華料理のレシピと実践的な調理法" shape=box]
+	}
+	"Week 5
+デザートの基礎" [fillcolor=lightblue shape=box style=filled]
+	"Week 5
+デザートの基礎" -> lectures_week5 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week5 {
+		lectures_week5 [label="デザートの歴史と種類
+基本的な製菓技術
+代表的なデザートの作り方
+デザートのプレゼンテーションとテーブルコーディネート" shape=box]
 	}
 	"Week 1
 料理の基礎" -> "Week 2
@@ -33,4 +52,10 @@ digraph {
 	"Week 2
 和食料理の応用" -> "Week 3
 フランス料理の基礎"
+	"Week 3
+フランス料理の基礎" -> "Week 4
+中華料理の基礎"
+	"Week 4
+中華料理の基礎" -> "Week 5
+デザートの基礎"
 }

@@ -29,6 +29,10 @@ def generate_lecture_content(lecture_title, lecture_description):
         api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
     )
 
+    # 🌸 messages contentの中にあるtextを変数として外に出しました
+    with open("prompts/lecture_content_prompt.md", "r") as f:
+        lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
+
     message = client.messages.create(
         model="claude-3-opus-20240229",
         max_tokens=4000,
@@ -39,44 +43,27 @@ def generate_lecture_content(lecture_title, lecture_description):
                 "role": "user",
                 "content": [
                     {
-"type": "text",
-"text": f"""
-次の講義のタイトルに基づいて、講義の内容を生成してください。
-講義のタイトル: {lecture_title}
-講義の概要: {lecture_description}
-上記の内容を学習できる研修資料の作成をお願いします。
-- md形式
-基本的に専門用語などは表にしてください。
-
-
-
-以下は構成例
-## 目次（リンクで飛ぶことができるように <a id="introduction"></a> など利用）
-## {lecture_title}とは（1000文字程度でわかりやすく）
-
-## 解説
-詳細解説と簡単な例題
-### タイトル（5つ）
-#### 詳細解説（500文字）
-#### 例題と解説
-
-
-                        """
+                        "type": "text",
+                        "text": lecture_content_prompt
                     }
                 ]
             }
         ]
     )
-
     return message.content[0].text
-
 def generate_quiz_content(lecture_title, lecture_description):
+    """
+    講義の問題集を生成する関数
+    """
     client = anthropic.Anthropic(
         api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
     )
 
-    # 花屋さんへ: ここから下は、AIに4択問題を作ってもらうための指示を出しているところです。
-    # まず、どのAIモデルを使うか指定します。ここでは "claude-3-opus-20240229" というモデルを使います。
+    # 🌸 messages contentの中にあるtextを変数として外に出しました
+    with open("prompts/quiz_content_prompt.md", "r") as f:
+        quiz_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
+        print(quiz_content_prompt)
+
     message = client.messages.create(
         model="claude-3-opus-20240229",  # 使用するAIモデルの名前
         max_tokens=4000,  # AIが生成する最大の単語数
@@ -88,39 +75,7 @@ def generate_quiz_content(lecture_title, lecture_description):
                 "content": [
                     {
                         "type": "text",
-                        "text": f"""
-次の講義のタイトルと概要に基づいて、4択問題を5つ生成してください。
-講義のタイトル: {lecture_title}
-講義の概要: {lecture_description}
-
-## 目次（リンクで飛ぶことができるように <a id="introduction"></a> など利用）
-                        
-## 実践問題
-思考力を要する基礎問題
-### 課題と解説（5つ）
-
-## 4択問題
-    - 4択問題を5つ
-    - 回答、解説はトグルにする
-    - 解説には引用を載せる
-    形式は以下の通り
-<details>
-<summary>問題1: DALL·E 3 で生成できる画像の最大サイズは？</summary>
-
-- a. 512x512
-- b. 1024x1024
-- c. 1792x1792
-- d. 2048x2048
-
-<details>
-<summary>回答と解説</summary>
-
-回答: b. 1024x1024
-
-DALL·E 3 では、1024x1024, 1024x1792, 1792x1024 の3つのサイズから選択できます。最大サイズは 1792x1024 です。
-</details>
-</details>
-                        """
+                        "text": quiz_content_prompt
                     }
                 ]
             }
@@ -128,37 +83,60 @@ DALL·E 3 では、1024x1024, 1024x1792, 1792x1024 の3つのサイズから選�
     )
 
     return message.content[0].text
-
 def generate_lectures(syllabus):
+    """
+    シラバスに基づいて講義資料を生成する関数
+    
+    Args:
+        syllabus (list): シラバスのデータを含むリスト
+        
+    Returns:
+        None
+    """
+    # 📁 outputディレクトリを作成（既に存在する場合はスキップ）
     os.makedirs("output", exist_ok=True)
+    # 📅 シラバスの週の総数を取得
     total_weeks = len(syllabus)
     
+    # 🔁 各週のデータに対してループ処理
     for week_num, week in enumerate(syllabus, start=1):
+        # 📁 各週のディレクトリを作成（例: output/week1）
         week_dir = f"output/week{week['week']}"
         os.makedirs(week_dir, exist_ok=True)
         
+        # 📝 各週のシラバスをMarkdownファイルに書き出し
         with open(f"{week_dir}/syllabus.md", "w") as f:
             f.write(f"# Week {week['week']} Syllabus\n\n")
             f.write("## Topics\n")
             for topic in week["topics"]:
                 f.write(f"- {topic}\n")
         
+        # 💬 現在の週の講義生成中であることを表示
         print(f"Week {week['week']}の講義を生成しています...")
+        # 🔁 各講義のデータに対してループ処理
         for i, lecture in enumerate(tqdm(week["lectures"], desc=f"Week {week['week']}, Lecture"), start=1):
+            # 📝 講義内容をMarkdownファイルに書き出し
             with open(f"{week_dir}/lecture{i}.md", "w") as f:
                 f.write(f"# {lecture['title']}\n\n")
                 lecture_content = generate_lecture_content(lecture["title"], lecture["description"])
                 f.write(lecture_content)
+            # ✅ 講義の生成完了メッセージを表示
             print(f"講義 {i} の生成が完了しました。")
             
+            # 📝 問題集をMarkdownファイルに書き出し  
             with open(f"{week_dir}/quiz{i}.md", "w") as f:    
                 quiz_content = generate_quiz_content(lecture["title"], lecture["description"])
                 f.write("# 問題集\n\n")
                 f.write(quiz_content)
+            # ✅ 問題集の生成完了メッセージを表示
             print(f"問題集 {i} の生成が完了しました。")
         
+        # 🎉 各週の処理完了メッセージを表示
         print(f"Week {week['week']} が完了しました。")
+        # 📊 全体の進捗状況を表示
         print(f"進捗状況: {week_num}/{total_weeks} 週が完了しました。\n")
 
+    # 📋 講義の概要を生成
     generate_overview()
+    # 🎉 すべての講義の生成完了メッセージを表示
     print("すべての講義が正常に生成されました!")

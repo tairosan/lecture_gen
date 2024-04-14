@@ -7,6 +7,24 @@ from dotenv import load_dotenv
 load_dotenv()  # .envファイルから環境変数を読み込む
 
 def generate_lecture_content(lecture_title, lecture_description):
+    """
+    講義の内容を生成する関数
+
+    Args:
+        lecture_title (str): 講義のタイトル
+        lecture_description (str): 講義の概要
+
+    Returns:
+        str: 生成された講義の内容（Markdown形式）
+
+    講義のタイトルと概要を元に、以下の構成で講義の内容を生成します：
+    1. 目次（リンク付き）
+    2. 講義のタイトルと概要の説明（1000文字程度）
+    3. 詳細解説（5つのトピックについて、各500文字程度）
+    4. 各トピックの例題と解説
+
+    専門用語は表形式でまとめ、わかりやすく説明します。
+    """
     client = anthropic.Anthropic(
         api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
     )
@@ -27,8 +45,8 @@ def generate_lecture_content(lecture_title, lecture_description):
 講義のタイトル: {lecture_title}
 講義の概要: {lecture_description}
 上記の内容を学習できる研修資料の作成をお願いします。
-- pythonコード    
 - md形式
+基本的に専門用語などは表にしてください。
 
 
 

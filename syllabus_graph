@@ -1,43 +1,60 @@
 // Syllabus Graph
 digraph {
 	"Week 1
-GPTsを用いたプロンプトプログラミングとドキュメントプログラミング, Cursorの基本操作と活用法" [fillcolor=lightblue shape=box style=filled]
+料理の基礎" [fillcolor=lightblue shape=box style=filled]
 	"Week 1
-GPTsを用いたプロンプトプログラミングとドキュメントプログラミング, Cursorの基本操作と活用法" -> lectures_week_1 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_1 {
-		lectures_week_1 [label="GPTsの特徴と利用方法
-Cursorの概要と主要機能" shape=box]
+料理の基礎" -> lectures_week1 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week1 {
+		lectures_week1 [label="料理の基本概念
+包丁の使い方と切り方
+だしの取り方と調味料の使い方" shape=box]
 	}
 	"Week 2
-テキスト生成AIの概要, シェルとOpen Interpreterの活用法" [fillcolor=lightblue shape=box style=filled]
+和食料理の応用" [fillcolor=lightblue shape=box style=filled]
 	"Week 2
-テキスト生成AIの概要, シェルとOpen Interpreterの活用法" -> lectures_week_2 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_2 {
-		lectures_week_2 [label="書籍作成に適したテキスト生成AIの選択
-シェルとOpen Interpreterの基礎" shape=box]
+和食料理の応用" -> lectures_week2 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week2 {
+		lectures_week2 [label="料理の基本概念の復習
+代表的な和食料理の作り方
+盛り付けとテーブルセッティング" shape=box]
 	}
 	"Week 3
-Githubを用いたバージョン管理と共同開発, Cursorを用いたClaudeによる書籍作成実践" [fillcolor=lightblue shape=box style=filled]
+フランス料理の基礎" [fillcolor=lightblue shape=box style=filled]
 	"Week 3
-Githubを用いたバージョン管理と共同開発, Cursorを用いたClaudeによる書籍作成実践" -> lectures_week_3 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_3 {
-		lectures_week_3 [label="Githubの基本とAIモデルのバージョン管理
-CursorとClaudeを組み合わせた書籍作成" shape=box]
+フランス料理の基礎" -> lectures_week3 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week3 {
+		lectures_week3 [label="フランス料理の歴史と特徴
+基本的なソースの作り方
+フルコースメニューの作成" shape=box]
 	}
 	"Week 4
-CursorからのGAS開発" [fillcolor=lightblue shape=box style=filled]
+中華料理の基礎" [fillcolor=lightblue shape=box style=filled]
 	"Week 4
-CursorからのGAS開発" -> lectures_week_4 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week_4 {
-		lectures_week_4 [label="メーリングリストへの書籍告知" shape=box]
+中華料理の基礎" -> lectures_week4 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week4 {
+		lectures_week4 [label="中華料理の歴史と特徴
+基本的な調理法と食材の扱い方
+代表的な中華料理のレシピと調理法" shape=box]
+	}
+	"Week 5
+デザートの基礎" [fillcolor=lightblue shape=box style=filled]
+	"Week 5
+デザートの基礎" -> lectures_week5 [headport=sw style=dashed tailport=s]
+	subgraph cluster_week5 {
+		lectures_week5 [label="デザートの歴史と種類
+基本的な製菓技術
+デザートのプレゼンテーションとテーブルコーディネート" shape=box]
 	}
 	"Week 1
-GPTsを用いたプロンプトプログラミングとドキュメントプログラミング, Cursorの基本操作と活用法" -> "Week 2
-テキスト生成AIの概要, シェルとOpen Interpreterの活用法"
+料理の基礎" -> "Week 2
+和食料理の応用"
 	"Week 2
-テキスト生成AIの概要, シェルとOpen Interpreterの活用法" -> "Week 3
-Githubを用いたバージョン管理と共同開発, Cursorを用いたClaudeによる書籍作成実践"
+和食料理の応用" -> "Week 3
+フランス料理の基礎"
 	"Week 3
-Githubを用いたバージョン管理と共同開発, Cursorを用いたClaudeによる書籍作成実践" -> "Week 4
-CursorからのGAS開発"
+フランス料理の基礎" -> "Week 4
+中華料理の基礎"
+	"Week 4
+中華料理の基礎" -> "Week 5
+デザートの基礎"
 }

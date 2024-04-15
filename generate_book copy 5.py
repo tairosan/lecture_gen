@@ -1,98 +1,19 @@
-# 📚 書籍生成AI
-講義資料生成AIと問題生成AIを使った書籍生成プログラムの仕様
 
-<details>
-<summary>📥 入力</summary>
+import os
+import yaml
+import anthropic
+from dotenv import load_dotenv
 
-- カリキュラムのYAMLファイル（`syllabus.yaml`）
-  - 各週のタイトルと概要が記載されたYAMLファイル
-</details>
+# .envファイルから環境変数を読み込む
+load_dotenv()
 
-<details>
-<summary>📤 出力</summary>
+# aisディレクトリが存在しない場合は作成する
+if not os.path.exists("ais"):
+    os.makedirs("ais")
 
-- `book`ディレクトリ
-  - 大項目 ディレクトリ
-   - 中項目.md
-
-</details>
-
-<details>
-<summary>🛠️ 処理の流れ</summary>
-
-1. `syllabus.yaml`を読み込み、大項目と中項目を取得 📖
-2. 大項目ごとに`book/`の中にディレクトリを作成 📂
-3. 各大項目のディレクトリについて以下の処理を繰り返す：
-   1. 中項目ごとにMarkdownファイルを作成 📝 
-   2. 講義資料生成AIを使って、中項目のタイトルと小項目から講義資料を生成 🤖📚
-   3. 問題生成AIを使って、中項目のタイトルと小項目から問題集を生成 🤖❓
-   4. 生成された講義資料と問題集を中項目のファイルに追記 ✍️
-   5. 中項目の小項目を目次として追加 📋
-4. 完成した各中項目のファイルを`book/`の対応するディレクトリに出力 💾
-</details>
-
-<details>
-<summary>📝 プログラムの構成</summary>
-
-以下のファイルは作成し、記述をする必要があります
-
-- `main.py`
-  - メインの処理を行うPythonスクリプト 
-  - `curriculum.yaml`の読み込み、AIの呼び出し、大項目ごとのフォルダ作成と中項目ごとの資料生成を行う 📂🤖
-- `book`ディレクトリ
-  - 大項目 ディレクトリ
-   - 中項目.md
-
-- `lecture_generator.py`
-  - 講義資料生成AIの仕様書（`AIdocs/講義資料生成AI.md`）を読み込み、Claude APIを使って講義資料を生成する関数 `generate_lecture_content()` を定義 📝🤖
-- `quiz_generator.py`
-  - 問題生成AIの仕様書（`AIdocs/問題生成AI.md`）を読み込み、Claude APIを使って問題を生成する関数 `generate_quiz_content()` を定義 ❓🤖
-
-- Claude APIに利用例
-```python
-def function():
-    """
-    client = anthropic.Anthropic(
-        api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
-    )
-
-    # 🌸 messages contentの中にあるtextを変数として外に出しました
-    with open("AIdocs/講義資料生成AI.md", "r") as f:
-        lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
-
-    message = client.messages.create(
-        model="claude-3-opus-20240229",
-        max_tokens=4000,
-        temperature=0.5,
-        system="",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": lecture_content_prompt
-                    }
-                ]
-            }
-        ]
-    )
-    return message.content[0].text
-
-```
-
-
-</details>
-
-<details>
-<summary>🌟 プログラムの特徴</summary>
-
-- 📝 YAMLファイルでカリキュラムの構造を柔軟に定義可能！
-- 🤖 講義資料生成AIと問題生成AIの2つのAIを組み合わせて自動生成！
-- 📚 生成された資料は1つのMarkdownファイルにまとめて書籍として出力！
-</details>
-
-
+# 講義資料生成AIのドキュメントを作成
+with open("ais/lecture_generator.md", "w") as f:
+    f.write("""
 ## 📝 講義資料生成AI
 
 講義のタイトルと概要から、講義資料の内容を生成するAI
@@ -146,10 +67,11 @@ def function():
 - [ ] 各トピックに例題と解説が付いているか 
 - [ ] 専門用語が表形式でまとめられているか
 </details>
+""")
 
-
-
-
+# 問題生成AIのドキュメントを作成
+with open("ais/quiz_generator.md", "w") as f:
+    f.write("""
 ## 📝 問題生成AI
 講義のタイトルと概要から、問題資料の内容を生成します
 
@@ -208,6 +130,95 @@ def function():
 - 4択問題の選択肢と解説は、講義の内容に即したものにする
 - 解説には、講義資料からの引用を含める
 </details>
+""")
 
+class LectureGenerator:
+    def __init__(self):
+        # Anthropic APIクライアントを初期化
+        self.client = anthropic.Anthropic(
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
+        )
 
+    def generate_lecture_content(self, lecture_title, lecture_description):
+        # 講義資料生成AIのドキュメントを読み込む
+        with open("ais/lecture_generator.md", "r") as f:
+            lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
 
+        # Claude APIを使って講義資料を生成
+        message = self.client.messages.create(
+            model="claude-3-haiku-20240307",
+            # model="claude-3-opus-20240229",
+            max_tokens=200,
+            temperature=0.5,
+            messages=[
+                {
+                    "role": "user",
+                    "content": lecture_content_prompt
+                }
+            ]
+        )
+        text = message.content[0].text.strip()
+        return text
+
+class QuizGenerator:
+    def __init__(self):
+        # Anthropic APIクライアントを初期化
+        self.client = anthropic.Anthropic(
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
+        )
+
+    def generate_quiz_content(self, lecture_title, lecture_description):
+        # 問題生成AIのドキュメントを読み込む
+        with open("ais/quiz_generator.md", "r") as f:
+            quiz_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
+
+        # Claude APIを使って問題を生成
+        message = self.client.messages.create(
+            model="claude-3-haiku-20240307",
+            # model="claude-3-opus-20240229",
+            max_tokens=200,
+            temperature=0.5,
+            messages=[
+                {
+                    "role": "user",
+                    "content": quiz_content_prompt
+                }
+            ]
+        )
+        text = message.content[0].text.strip()
+        return text
+
+def main():
+    # syllabus.yamlを読み込む
+    with open("syllabus.yaml", "r") as f:
+        syllabus = yaml.safe_load(f)
+
+    # 講義資料生成AIと問題生成AIのインスタンスを作成
+    lecture_generator = LectureGenerator()
+    quiz_generator = QuizGenerator()
+
+    # 大項目ごとにディレクトリを作成し、中項目ごとにファイルを生成
+    for week in syllabus:
+        week_dir = f"book/week{week['week']}"
+        os.makedirs(week_dir, exist_ok=True)
+
+        for lecture in week["lectures"]:
+            lecture_title = lecture["title"]
+            lecture_description = lecture["description"]
+
+            # 講義資料を生成
+            lecture_content = lecture_generator.generate_lecture_content(lecture_title, lecture_description)
+            print(lecture_content)
+
+            # 問題を生成
+            quiz_content = quiz_generator.generate_quiz_content(lecture_title, lecture_description)
+            print(quiz_content)
+
+            # 中項目のファイルに講義資料と問題を書き込む
+            with open(f"{week_dir}/{lecture_title}.md", "w") as f:
+                f.write(lecture_content)
+                f.write("\n\n")
+                f.write(quiz_content)
+
+if __name__ == "__main__":
+    main()

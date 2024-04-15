@@ -48,38 +48,6 @@
 - `quiz_generator.py`
   - 問題生成AIの仕様書（`AIdocs/問題生成AI.md`）を読み込み、Claude APIを使って問題を生成する関数 `generate_quiz_content()` を定義 ❓🤖
 
-- Claude APIに利用例
-```python
-def function():
-    """
-    client = anthropic.Anthropic(
-        api_key=os.getenv("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得
-    )
-
-    # 🌸 messages contentの中にあるtextを変数として外に出しました
-    with open("AIdocs/講義資料生成AI.md", "r") as f:
-        lecture_content_prompt = f.read().format(lecture_title=lecture_title, lecture_description=lecture_description)
-
-    message = client.messages.create(
-        model="claude-3-opus-20240229",
-        max_tokens=4000,
-        temperature=0.5,
-        system="",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": lecture_content_prompt
-                    }
-                ]
-            }
-        ]
-    )
-    return message.content[0].text
-
-```
 
 
 </details>

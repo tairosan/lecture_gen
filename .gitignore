@@ -38,3 +38,4 @@ __pycache__
 *.pyc
 *copy.txt
 *copy*.pdf
+*copy*

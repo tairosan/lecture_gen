@@ -38,4 +38,6 @@ __pycache__
 *.pyc
 *copy.txt
 *copy*.pdf
-*copy*transcript_*
+*copy*
+syllabus_graph.png
+syllabus_graph.png.pdf

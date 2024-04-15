@@ -23,14 +23,13 @@ def generate_syllabus(transcript):
     prompt = f"""
     以下の文字起こし情報からカリキュラムを作成してください。
     カリキュラムはyaml形式で出力してください。
-
-    
     文字起こし情報:
     {transcript}
     
+    以下を例として（週はweek、月はmonth、年はyearなど考えて記述）
     - week: 1
      topics:
-     - 基礎開発ツール講習
+     - 
      lectures:
        - title: （複数）
        description: |
@@ -85,6 +84,8 @@ def generate_syllabus_graph():
 
     上記のシラバスから、
     以下のPythonコードを生成してください。
+
+    以下の「週」に関してはyamlファイルを見て適宜変える、月、年、カテゴリーとか
 
     # syllabusデータの作成 （型：リスト[dict]）
     # Graphvizを使ってグラフを作成。コメントに'Syllabus Graph'を指定。
@@ -142,19 +143,36 @@ def generate_syllabus_graph():
 # from generate_syllabus_graph import generate_syllabus_graph
 
 # 使用例
-with open("./transcript_cook.txt", "r") as f:
-    transcript = f.read()  # transcript.txtファイルから文字起こし情報を読み込む
-    syllabus = generate_syllabus(transcript)
-    print(syllabus)
-    with open("syllabus.txt", "w") as f:
-        f.write(syllabus)
-    
-    os.rename("syllabus.txt", "syllabus.yaml")
-    
-    # # syllabusをyamlで読み込んで辞書形式に変換
-    # syllabus_dict = yaml.safe_load(syllabus)
-    
-    # syllabusの内容からグラフを生成
-    generate_syllabus_graph()
+from tqdm import tqdm
+import time
 
-# generate_syllabus_graph()
+steps = [
+    "📜 文字起こしデータの読み込み",
+    "📝 シラバスの生成",
+    "💾 シラバスのテキストファイルへの保存", 
+    "📂 ファイル名変更",
+    "📊 シラバスからグラフの生成"
+]
+
+for step in tqdm(steps):
+    if step == "📜 文字起こしデータの読み込み":
+        with open("./transcript.txt", "r") as f:
+            transcript = f.read()  # transcript.txtファイルから文字起こし情報を読み込む
+        print(f"{step}完了！")
+    elif step == "📝 シラバスの生成":
+        syllabus = generate_syllabus(transcript)
+        print(f"{step}完了！")
+    elif step == "💾 シラバスのテキストファイルへの保存":
+        with open("syllabus.txt", "w") as f:
+            f.write(syllabus)
+        print(f"{step}完了！")
+    elif step == "📂 ファイル名変更":
+        os.rename("syllabus.txt", "syllabus.yaml")
+        print(f"{step}完了！")
+    elif step == "📊 シラバスからグラフの生成":
+        generate_syllabus_graph()
+        print(f"{step}完了！")
+    time.sleep(0.5)
+
+print("✏️ シラバスの内容は syllabus.yaml を書き換えることで、ご自身の求めている形に変更できます。")
+print("📜 syllabus.yamlのリンク: ./syllabus.yaml")

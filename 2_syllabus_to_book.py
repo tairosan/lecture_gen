@@ -46,6 +46,8 @@ def generate_book():
 h1はクラスとして記述、h2はドキュメントとしてaisディレクトリにファイルとして格納
 - aisディレクトリがなければ作成
 - aisディレクトリ内にh2のドキュメントを記述（## の文字列を検知して、該当箇所をカットしてファイル保存）
+with open("~~~.md", "w") as f:
+    f.write(txt)
 - この処理はpythonで記述しておくこと
 
 クラス内でh2は以下の関数で適宜呼び出し。
@@ -71,10 +73,14 @@ load_dotenv()  # .envファイルから環境変数を読み込む
 
 
 
+print("📚 本の生成コードを生成中...")
 code = generate_book()
 code = code.replace("```python", "").replace("```", "")
 with open("generate_book.py", "w") as f:
     f.write(code)
+print("✅ 本の生成コードを生成完了！")
 
+print("📖 本の生成コードを実行中...")
 # codeを実行するコードを追記
 exec(code)
+print("🎉 本の生成が完了しました！")

@@ -1,60 +1,60 @@
 // Syllabus Graph
 digraph {
-	"Week 1
-料理の基礎" [fillcolor=lightblue shape=box style=filled]
-	"Week 1
-料理の基礎" -> lectures_week1 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week1 {
-		lectures_week1 [label="料理の基本概念
-包丁の使い方と切り方
-だしの取り方と調味料の使い方" shape=box]
+	"Month 1
+武士の歴史と心構え" [fillcolor=lightblue shape=box style=filled]
+	"Month 1
+武士の歴史と心構え" -> lectures_month_1 [headport=nw style=dashed tailport=s]
+	subgraph cluster_month_1 {
+		lectures_month_1 [label="武士の起源と発展
+武士道の基本理念" shape=box]
 	}
-	"Week 2
-和食料理の応用" [fillcolor=lightblue shape=box style=filled]
-	"Week 2
-和食料理の応用" -> lectures_week2 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week2 {
-		lectures_week2 [label="料理の基本概念の復習
-代表的な和食料理の作り方
-盛り付けとテーブルセッティング" shape=box]
+	"Month 2
+武芸の基礎" [fillcolor=lightblue shape=box style=filled]
+	"Month 2
+武芸の基礎" -> lectures_month_2 [headport=nw style=dashed tailport=s]
+	subgraph cluster_month_2 {
+		lectures_month_2 [label="剣術の基本
+弓術の基本
+馬術の基本
+武芸の心法" shape=box]
 	}
-	"Week 3
-フランス料理の基礎" [fillcolor=lightblue shape=box style=filled]
-	"Week 3
-フランス料理の基礎" -> lectures_week3 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week3 {
-		lectures_week3 [label="フランス料理の歴史と特徴
-基本的なソースの作り方
-フルコースメニューの作成" shape=box]
+	"Month 3
+兵法と戦略" [fillcolor=lightblue shape=box style=filled]
+	"Month 3
+兵法と戦略" -> lectures_month_3 [headport=nw style=dashed tailport=s]
+	subgraph cluster_month_3 {
+		lectures_month_3 [label="孫子の兵法
+合戦の戦略と戦術
+指揮官の資質" shape=box]
 	}
-	"Week 4
-中華料理の基礎" [fillcolor=lightblue shape=box style=filled]
-	"Week 4
-中華料理の基礎" -> lectures_week4 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week4 {
-		lectures_week4 [label="中華料理の歴史と特徴
-基本的な調理法と食材の扱い方
-代表的な中華料理のレシピと調理法" shape=box]
+	"Month 4
+文化と教養" [fillcolor=lightblue shape=box style=filled]
+	"Month 4
+文化と教養" -> lectures_month_4 [headport=nw style=dashed tailport=s]
+	subgraph cluster_month_4 {
+		lectures_month_4 [label="茶道の基本
+花道の基本
+書道の基本
+思想的背景の理解" shape=box]
 	}
-	"Week 5
-デザートの基礎" [fillcolor=lightblue shape=box style=filled]
-	"Week 5
-デザートの基礎" -> lectures_week5 [headport=sw style=dashed tailport=s]
-	subgraph cluster_week5 {
-		lectures_week5 [label="デザートの歴史と種類
-基本的な製菓技術
-デザートのプレゼンテーションとテーブルコーディネート" shape=box]
+	"Month 5
+総合実践" [fillcolor=lightblue shape=box style=filled]
+	"Month 5
+総合実践" -> lectures_month_5 [headport=nw style=dashed tailport=s]
+	subgraph cluster_month_5 {
+		lectures_month_5 [label="合戦シミュレーション
+武士としての生き方" shape=box]
 	}
-	"Week 1
-料理の基礎" -> "Week 2
-和食料理の応用"
-	"Week 2
-和食料理の応用" -> "Week 3
-フランス料理の基礎"
-	"Week 3
-フランス料理の基礎" -> "Week 4
-中華料理の基礎"
-	"Week 4
-中華料理の基礎" -> "Week 5
-デザートの基礎"
+	"Month 1
+武士の歴史と心構え" -> "Month 2
+武芸の基礎"
+	"Month 2
+武芸の基礎" -> "Month 3
+兵法と戦略"
+	"Month 3
+兵法と戦略" -> "Month 4
+文化と教養"
+	"Month 4
+文化と教養" -> "Month 5
+総合実践"
 }

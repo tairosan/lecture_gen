@@ -1,8 +1,8 @@
 
 import os
 import yaml
-import anthropic
 from dotenv import load_dotenv
+import anthropic
 from tqdm import tqdm
 
 load_dotenv()  # .envファイルから環境変数を読み込む
@@ -10,7 +10,7 @@ load_dotenv()  # .envファイルから環境変数を読み込む
 class LectureGenerator:
     def __init__(self):
         self.client = anthropic.Anthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY")  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
         )
 
     def generate_lecture_content(self, lecture_title, lecture_description):
@@ -33,14 +33,13 @@ class LectureGenerator:
                 }
             ]
         )
-
+        
         return response.content[0].text.strip()
-
 
 class QuizGenerator:
     def __init__(self):
         self.client = anthropic.Anthropic(
-            api_key=os.environ.get("ANTHROPIC_API_KEY")  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
+            api_key=os.environ.get("ANTHROPIC_API_KEY"),  # 環境変数からAPI keyを取得。os.getenvではなくos.environ.getを使う 🔑
         )
 
     def generate_quiz_content(self, lecture_title, lecture_description):
@@ -63,11 +62,12 @@ class QuizGenerator:
                 }
             ]
         )
-
+        
         return response.content[0].text.strip()
 
-
 def main():
+    print("📚 書籍生成AIを開始します...")
+
     # aisディレクトリがなければ作成
     os.makedirs("ais", exist_ok=True)
 
@@ -78,38 +78,32 @@ def main():
     lecture_generator = LectureGenerator()
     quiz_generator = QuizGenerator()
 
-    for month_data in tqdm(syllabus, desc="Processing months"):
+    for month_data in tqdm(syllabus, desc="📆 月別処理中"):
         month = month_data["month"]
         topics = month_data["topics"]
+        lectures = month_data["lectures"]
 
-        # 大項目ごとにディレクトリを作成
+        # 大項目ディレクトリを作成
         os.makedirs(f"book/{month:02d}", exist_ok=True)
 
-        for topic in tqdm(topics, desc=f"Processing topics for month {month}", leave=False):
+        for lecture in tqdm(lectures, desc=f"📝 {month}月の講義を生成中", leave=False):
+            lecture_title = lecture["title"]
+            lecture_description = lecture["description"]
+
+            # 講義資料を生成
+            lecture_content = lecture_generator.generate_lecture_content(lecture_title, lecture_description)
+
+            # 問題を生成
+            quiz_content = quiz_generator.generate_quiz_content(lecture_title, lecture_description)
+
             # 中項目のMarkdownファイルを作成
-            with open(f"book/{month:02d}/{topic}.md", "w") as f:
-                f.write(f"# {topic}\n\n")
+            with open(f"book/{month:02d}/{lecture_title}.md", "w") as f:
+                f.write(f"# {lecture_title}\n\n")
+                f.write(lecture_content)
+                f.write("\n\n")
+                f.write(quiz_content)
 
-            for lecture in tqdm(month_data["lectures"], desc=f"Processing lectures for topic {topic}", leave=False):
-                lecture_title = lecture["title"]
-                lecture_description = lecture["description"]
-
-                # 講義資料を生成
-                lecture_content = lecture_generator.generate_lecture_content(lecture_title, lecture_description)
-
-                # 問題を生成
-                quiz_content = quiz_generator.generate_quiz_content(lecture_title, lecture_description)
-
-                # 中項目のMarkdownファイルに追記
-                with open(f"book/{month:02d}/{topic}.md", "a") as f:
-                    f.write(f"## {lecture_title}\n\n")
-                    f.write(lecture_content)
-                    f.write("\n\n")
-                    f.write(quiz_content)
-                    f.write("\n\n")
-
-    print("Book generation completed.")
-
+    print("📖 書籍の生成が完了しました！")
 
 if __name__ == "__main__":
     main()

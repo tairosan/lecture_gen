@@ -72,7 +72,7 @@ load_dotenv()  # .envファイルから環境変数を読み込む
     return message.content[0].text
 
 
-
+"""
 print("📚 本の生成コードを生成中...")
 code = generate_book()
 code = code.replace("```python", "").replace("```", "")
@@ -84,3 +84,13 @@ print("📖 本の生成コードを実行中...")
 # codeを実行するコードを追記
 exec(code)
 print("🎉 本の生成が完了しました！")
+"""
+
+print("📚 本の生成コードを生成中...")
+code = generate_book()
+print("生成されたコード:")
+print(code)
+code = code.replace("```python", "").replace("```", "")
+with open("generate_book.py", "w") as f:
+    f.write(code)
+print("✅ 本の生成コードを生成完了！")

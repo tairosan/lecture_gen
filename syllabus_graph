@@ -1,60 +1,62 @@
 // Syllabus Graph
 digraph {
 	"Month 1
-武士の歴史と心構え" [fillcolor=lightblue shape=box style=filled]
+OpenAIのAPI(GPT-3.5, GPT-4, Whisper, CLIPなど)とその活用方法" [fillcolor=lightblue shape=box style=filled]
 	"Month 1
-武士の歴史と心構え" -> lectures_month_1 [headport=nw style=dashed tailport=s]
+OpenAIのAPI(GPT-3.5, GPT-4, Whisper, CLIPなど)とその活用方法" -> lectures_1 [headport=sw style=dashed tailport=s]
 	subgraph cluster_month_1 {
-		lectures_month_1 [label="武士の起源と発展
-武士道の基本理念" shape=box]
+		lectures_1 [label="OpenAIのAPIの概要と特徴
+APIを呼び出すためのSDKとライブラリ
+APIを使ったアプリケーション開発
+APIの認証方法とレート制限" shape=box]
 	}
 	"Month 2
-武芸の基礎" [fillcolor=lightblue shape=box style=filled]
+Anthropic社のClaudeやその他のAIサービスのAPI" [fillcolor=lightblue shape=box style=filled]
 	"Month 2
-武芸の基礎" -> lectures_month_2 [headport=nw style=dashed tailport=s]
+Anthropic社のClaudeやその他のAIサービスのAPI" -> lectures_2 [headport=sw style=dashed tailport=s]
 	subgraph cluster_month_2 {
-		lectures_month_2 [label="剣術の基本
-弓術の基本
-馬術の基本
-武芸の心法" shape=box]
+		lectures_2 [label="Claudeの特徴と利用方法
+他社のAIサービスの調査と比較
+異なるAIサービスの組み合わせ" shape=box]
 	}
 	"Month 3
-兵法と戦略" [fillcolor=lightblue shape=box style=filled]
+オープンソースのLLM(Llama, STABLE DIFFUSION, BLOOM, GLM, Falconなど)" [fillcolor=lightblue shape=box style=filled]
 	"Month 3
-兵法と戦略" -> lectures_month_3 [headport=nw style=dashed tailport=s]
+オープンソースのLLM(Llama, STABLE DIFFUSION, BLOOM, GLM, Falconなど)" -> lectures_3 [headport=sw style=dashed tailport=s]
 	subgraph cluster_month_3 {
-		lectures_month_3 [label="孫子の兵法
-合戦の戦略と戦術
-指揮官の資質" shape=box]
+		lectures_3 [label="オープンソースモデルの特徴と活用事例
+モデルの微調整(fine-tuning)とプロンプトエンジニアリング
+モデルの評価尺度" shape=box]
 	}
 	"Month 4
-文化と教養" [fillcolor=lightblue shape=box style=filled]
+LLMを活用したアプリケーション開発" [fillcolor=lightblue shape=box style=filled]
 	"Month 4
-文化と教養" -> lectures_month_4 [headport=nw style=dashed tailport=s]
+LLMを活用したアプリケーション開発" -> lectures_4 [headport=sw style=dashed tailport=s]
 	subgraph cluster_month_4 {
-		lectures_month_4 [label="茶道の基本
-花道の基本
-書道の基本
-思想的背景の理解" shape=box]
+		lectures_4 [label="LLMを活用したアプリケーションのアーキテクチャ
+フロントエンドとバックエンドの連携
+LLMを補助するための関連技術" shape=box]
 	}
 	"Month 5
-総合実践" [fillcolor=lightblue shape=box style=filled]
+LLMを活用したサービス開発の総仕上げ" [fillcolor=lightblue shape=box style=filled]
 	"Month 5
-総合実践" -> lectures_month_5 [headport=nw style=dashed tailport=s]
+LLMを活用したサービス開発の総仕上げ" -> lectures_5 [headport=sw style=dashed tailport=s]
 	subgraph cluster_month_5 {
-		lectures_month_5 [label="合戦シミュレーション
-武士としての生き方" shape=box]
+		lectures_5 [label="実践的なサービス開発プロジェクト
+APIやオープンソースモデルの選択と実装
+LLM活用における倫理的考慮事項
+セキュリティとAPIキーの管理" shape=box]
 	}
 	"Month 1
-武士の歴史と心構え" -> "Month 2
-武芸の基礎"
+OpenAIのAPI(GPT-3.5, GPT-4, Whisper, CLIPなど)とその活用方法" -> "Month 2
+Anthropic社のClaudeやその他のAIサービスのAPI"
 	"Month 2
-武芸の基礎" -> "Month 3
-兵法と戦略"
+Anthropic社のClaudeやその他のAIサービスのAPI" -> "Month 3
+オープンソースのLLM(Llama, STABLE DIFFUSION, BLOOM, GLM, Falconなど)"
 	"Month 3
-兵法と戦略" -> "Month 4
-文化と教養"
+オープンソースのLLM(Llama, STABLE DIFFUSION, BLOOM, GLM, Falconなど)" -> "Month 4
+LLMを活用したアプリケーション開発"
 	"Month 4
-文化と教養" -> "Month 5
-総合実践"
+LLMを活用したアプリケーション開発" -> "Month 5
+LLMを活用したサービス開発の総仕上げ"
 }
